@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>224 OPTIQUE – Rapport OCT</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Arial', sans-serif; font-size: 12px; color: #1a1a1a; background: #dce3ed; }
+  .page { max-width: 820px; margin: 20px auto; background: #fff; border-radius: 10px; box-shadow: 0 6px 28px rgba(0,0,0,0.18); overflow: hidden; }
+
+  /* HEADER */
+  .header { background: linear-gradient(135deg, #002f66, #0055b3); color: #fff; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; }
+  .logo-name { font-size: 26px; font-weight: 900; letter-spacing: 3px; }
+  .logo-name span { color: #7ecfff; }
+  .logo-tagline { font-size: 10px; opacity: 0.8; margin-top: 3px; letter-spacing: 1px; text-transform: uppercase; }
+  .header-contact { text-align: right; font-size: 11px; line-height: 2; opacity: 0.92; }
+  .title-bar { background: #e6f0ff; border-left: 6px solid #0055b3; padding: 9px 28px; font-size: 13px; font-weight: 700; color: #002f66; letter-spacing: 1px; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; }
+  .title-bar .date-ref { font-size: 11px; font-weight: normal; color: #555; }
+
+  /* SECTION */
+  .section { padding: 11px 28px; border-bottom: 1px solid #eaeff7; }
+  .section:last-of-type { border-bottom: none; }
+  .section-title { font-size: 10px; font-weight: 700; text-transform: uppercase; color: #0055b3; letter-spacing: 1.2px; margin-bottom: 8px; padding-bottom: 3px; border-bottom: 1px dashed #b3cce8; }
+
+  /* GRIDS */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 22px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 7px 18px; }
+
+  /* FIELD */
+  .field { display: flex; flex-direction: column; gap: 2px; }
+  .field label { font-size: 9.5px; color: #777; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .field input[type="text"],.field input[type="date"],.field input[type="email"],.field input[type="tel"],.field textarea {
+    border: none; border-bottom: 1px solid #c0d4ec; padding: 3px 2px; font-size: 12px; color: #111; background: transparent; outline: none; width: 100%; font-family: Arial, sans-serif; resize: none;
+  }
+  .field input:focus,.field textarea:focus { border-bottom-color: #0055b3; background: #f0f7ff; border-radius: 2px; }
+  textarea { min-height: 38px; line-height: 1.5; }
+
+  /* RADIO / CHECK */
+  .radio-row,.signal-row { display: flex; gap: 16px; align-items: center; margin-top: 4px; flex-wrap: wrap; }
+  .radio-row label,.signal-row label,.check-item { display: flex; align-items: center; gap: 5px; font-size: 12px; cursor: pointer; font-weight: normal; text-transform: none; letter-spacing: 0; color: #1a1a1a; }
+  .check-group { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 4px; }
+  .check-item input[type="checkbox"] { width: 13px; height: 13px; accent-color: #0055b3; cursor: pointer; }
+  .check-item.autre input[type="text"] { border: none; border-bottom: 1px solid #c0d4ec; min-width: 110px; font-size: 12px; background: transparent; outline: none; padding: 1px 2px; }
+
+  /* OCT 2 colonnes */
+  .oeil-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .oeil-block { border-radius: 7px; padding: 10px 14px; }
+  .oeil-od { background: #f0f6ff; border: 1.5px solid #a8c8f0; }
+  .oeil-og { background: #f0faf4; border: 1.5px solid #90d4b0; }
+  .oeil-title { font-weight: 700; font-size: 12px; text-align: center; border-radius: 4px; padding: 4px 0; margin-bottom: 8px; }
+  .oeil-od .oeil-title { background: #d0e8ff; color: #002f66; }
+  .oeil-og .oeil-title { background: #c8eedd; color: #1a5c36; }
+
+  /* SIGNATURE BLOCK */
+  .sign-section { padding: 12px 28px 16px; border-top: 2px solid #e0e8f5; }
+  .sign-title { font-size: 10px; font-weight: 700; text-transform: uppercase; color: #0055b3; letter-spacing: 1.2px; margin-bottom: 12px; padding-bottom: 3px; border-bottom: 1px dashed #b3cce8; }
+  .sign-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px 20px; }
+  .sign-box { display: flex; flex-direction: column; gap: 4px; }
+  .sign-box label { font-size: 9.5px; color: #777; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .sign-box input[type="text"] { border: none; border-bottom: 1px solid #c0d4ec; padding: 3px 2px; font-size: 12px; background: transparent; outline: none; width: 100%; font-family: Arial; }
+  .sign-box input:focus { border-bottom-color: #0055b3; background: #f0f7ff; }
+  .sign-area { border: 1px solid #c0d4ec; border-radius: 5px; height: 60px; margin-top: 6px; background: #fafcff; position: relative; }
+  .sign-area-label { position: absolute; bottom: 5px; right: 8px; font-size: 9px; color: #bbb; font-style: italic; }
+
+  /* RDVS + NEXT APPT */
+  .rdv-bar { background: #e6f0ff; border-radius: 6px; padding: 8px 14px; display: flex; align-items: center; gap: 12px; margin-top: 12px; }
+  .rdv-bar label { font-size: 10px; font-weight: 700; text-transform: uppercase; color: #0055b3; letter-spacing: 0.5px; white-space: nowrap; }
+  .rdv-bar input[type="date"] { border: none; border-bottom: 1px solid #9ab8dc; background: transparent; font-size: 12px; outline: none; padding: 2px 4px; }
+
+  /* FOOTER PRINT */
+  .footer { background: #002f66; color: #aac8e8; text-align: center; font-size: 10px; padding: 8px; letter-spacing: 0.5px; }
+
+  /* BUTTONS */
+  .btn-bar { display: flex; gap: 12px; justify-content: center; padding: 14px 28px; background: #f0f4f8; border-top: 1px solid #dde4f0; }
+  .btn { padding: 9px 28px; border: none; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+  .btn-print { background: #0055b3; color: #fff; }
+  .btn-print:hover { background: #002f66; }
+  .btn-reset { background: #dde4ed; color: #444; }
+  .btn-reset:hover { background: #c8d0de; }
+
+  /* ======== IMPRESSION ======== */
+  @media print {
+    @page { size: A4; margin: 10mm 10mm 12mm; }
+    body { background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page { box-shadow: none; margin: 0; border-radius: 0; max-width: 100%; }
+    .btn-bar { display: none !important; }
+    .section, .oeil-cols, .sign-section, .sign-grid { page-break-inside: avoid; }
+    .field input, .field textarea, .sign-box input { border-bottom: 1px solid #999 !important; background: transparent !important; }
+    .sign-area { border: 1px solid #aaa !important; background: #fff !important; }
+    textarea { overflow: hidden; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <div class="logo-name">224 <span>OPTIQUE</span></div>
+      <div class="logo-tagline">Tomographie en Cohérence Optique</div>
+    </div>
+    <div class="header-contact">
+      📍 Nongo carrefour ambiance<br>
+      📞 613 010 109<br>
+      📧 contact@224optique.com
+    </div>
+  </div>
+  <div class="title-bar">
+    <span>📋 Rapport OCT</span>
+    <span class="date-ref" id="dateRef"></span>
+  </div>
+
+  <!-- PATIENT -->
+  <div class="section">
+    <div class="section-title">Informations Patient</div>
+    <div class="grid3">
+      <div class="field"><label>Nom et prénom</label><input type="text" placeholder="..."></div>
+      <div class="field"><label>ID Patient</label><input type="text" placeholder="..."></div>
+      <div class="field"><label>Date de naissance</label><input type="date"></div>
+      <div class="field">
+        <label>Sexe</label>
+        <div class="radio-row">
+          <label><input type="radio" name="sexe"> Masculin</label>
+          <label><input type="radio" name="sexe"> Féminin</label>
+        </div>
+      </div>
+      <div class="field"><label>Téléphone</label><input type="tel" placeholder="..."></div>
+      <div class="field"><label>Email</label><input type="email" placeholder="..."></div>
+    </div>
+  </div>
+
+  <!-- MÉDECIN -->
+  <div class="section">
+    <div class="section-title">Informations Médicales</div>
+    <div class="grid2" style="margin-bottom:8px">
+      <div class="field"><label>Médecin / Opérateur</label><input type="text" placeholder="..."></div>
+      <div class="field"><label>Date de l'examen</label><input type="date" id="examDate"></div>
+    </div>
+    <div class="field"><label>Motif de l'examen</label>
+      <div class="check-group">
+        <label class="check-item"><input type="checkbox"> Baisse de vision</label>
+        <label class="check-item"><input type="checkbox"> Suivi glaucome</label>
+        <label class="check-item"><input type="checkbox"> DMLA</label>
+        <label class="check-item"><input type="checkbox"> Œdème maculaire</label>
+        <label class="check-item autre"><input type="checkbox" id="motif_cb"> Autre : <input type="text" id="motif_txt" placeholder="préciser..." disabled></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- TYPE -->
+  <div class="section">
+    <div class="section-title">Type d'Examen</div>
+    <div class="check-group">
+      <label class="check-item"><input type="checkbox"> Macula</label>
+      <label class="check-item"><input type="checkbox"> Nerf optique (RNFL)</label>
+      <label class="check-item"><input type="checkbox"> Scan complet</label>
+      <label class="check-item autre"><input type="checkbox" id="type_cb"> Autre : <input type="text" id="type_txt" placeholder="préciser..." disabled></label>
+    </div>
+  </div>
+
+  <!-- OCT RÉSULTATS -->
+  <div class="section">
+    <div class="section-title">Résultats OCT</div>
+    <div class="oeil-cols">
+      <div class="oeil-block oeil-od">
+        <div class="oeil-title">👁 Œil Droit (OD)</div>
+        <div class="field"><label>Épaisseur maculaire centrale (µm)</label><input type="text" placeholder="ex : 265"></div>
+        <div class="field" style="margin-top:7px"><label>RNFL (µm)</label><input type="text" placeholder="ex : 98"></div>
+        <div class="field" style="margin-top:7px"><label>Qualité du signal</label>
+          <div class="signal-row">
+            <label><input type="radio" name="sig_od"> Bonne</label>
+            <label><input type="radio" name="sig_od"> Moyenne</label>
+            <label><input type="radio" name="sig_od"> Faible</label>
+          </div>
+        </div>
+        <div class="field" style="margin-top:7px"><label>Observations</label><textarea placeholder="Observations OD..."></textarea></div>
+      </div>
+      <div class="oeil-block oeil-og">
+        <div class="oeil-title">👁 Œil Gauche (OG)</div>
+        <div class="field"><label>Épaisseur maculaire centrale (µm)</label><input type="text" placeholder="ex : 270"></div>
+        <div class="field" style="margin-top:7px"><label>RNFL (µm)</label><input type="text" placeholder="ex : 102"></div>
+        <div class="field" style="margin-top:7px"><label>Qualité du signal</label>
+          <div class="signal-row">
+            <label><input type="radio" name="sig_og"> Bonne</label>
+            <label><input type="radio" name="sig_og"> Moyenne</label>
+            <label><input type="radio" name="sig_og"> Faible</label>
+          </div>
+        </div>
+        <div class="field" style="margin-top:7px"><label>Observations</label><textarea placeholder="Observations OG..."></textarea></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTERPRÉTATION -->
+  <div class="section">
+    <div class="section-title">Interprétation</div>
+    <div class="check-group">
+      <label class="check-item"><input type="radio" name="interp"> Normal</label>
+      <label class="check-item"><input type="radio" name="interp"> Suspicion de pathologie</label>
+      <label class="check-item"><input type="radio" name="interp"> Pathologie confirmée</label>
+    </div>
+    <div class="field" style="margin-top:8px"><label>Détails</label><textarea placeholder="Détails de l'interprétation..."></textarea></div>
+  </div>
+
+  <!-- CONCLUSION -->
+  <div class="section">
+    <div class="section-title">Conclusion</div>
+    <div class="field"><textarea placeholder="Conclusion du rapport..." style="min-height:50px"></textarea></div>
+  </div>
+
+  <!-- RECOMMANDATIONS -->
+  <div class="section">
+    <div class="section-title">Recommandations</div>
+    <div class="check-group">
+      <label class="check-item"><input type="checkbox"> Suivi régulier</label>
+      <label class="check-item"><input type="checkbox"> Consultation spécialisée</label>
+      <label class="check-item"><input type="checkbox"> Traitement recommandé</label>
+      <label class="check-item autre"><input type="checkbox" id="reco_cb"> Autre : <input type="text" id="reco_txt" placeholder="préciser..." disabled></label>
+    </div>
+  </div>
+
+  <!-- SIGNATURES -->
+  <div class="sign-section">
+    <div class="sign-title">Signatures & Validation</div>
+    <div class="sign-grid">
+
+      <div class="sign-box">
+        <label>Nom du praticien</label>
+        <input type="text" placeholder="...">
+        <div class="sign-area"><span class="sign-area-label">Signature du praticien</span></div>
+      </div>
+
+      <div class="sign-box">
+        <label>Cachet / Tampon</label>
+        <div class="sign-area" style="height:82px"><span class="sign-area-label">Cachet officiel</span></div>
+      </div>
+
+      <div class="sign-box">
+        <label>Signature du patient</label>
+        <input type="text" placeholder="Nom du patient">
+        <div class="sign-area"><span class="sign-area-label">Signature du patient</span></div>
+      </div>
+
+    </div>
+
+    <!-- PROCHAIN RDV -->
+    <div class="rdv-bar">
+      <label>📅 Prochain rendez-vous :</label>
+      <input type="date">
+      <span style="font-size:11px;color:#555;margin-left:8px">Notes :</span>
+      <input type="text" style="border:none;border-bottom:1px solid #9ab8dc;background:transparent;font-size:12px;outline:none;flex:1;padding:2px 4px;" placeholder="...">
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    224 OPTIQUE &nbsp;|&nbsp; Nongo carrefour ambiance &nbsp;|&nbsp; 📞 613 010 109 &nbsp;|&nbsp; contact@224optique.com
+  </div>
+
+  <!-- BOUTONS (masqués à l'impression) -->
+  <div class="btn-bar">
+    <button class="btn btn-print" onclick="window.print()">🖨️ Imprimer / Exporter PDF</button>
+    <button class="btn btn-reset" onclick="resetForm()">🔄 Nouveau rapport</button>
+  </div>
+
+</div>
+
+<script>
+  // Date aujourd'hui
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('examDate').value = today;
+  const d = new Date();
+  document.getElementById('dateRef').textContent = 'Date : ' + d.toLocaleDateString('fr-FR', {day:'2-digit', month:'long', year:'numeric'});
+
+  // Activer champs "Autre"
+  [['motif_cb','motif_txt'],['type_cb','type_txt'],['reco_cb','reco_txt']].forEach(([cbId, txtId]) => {
+    const cb = document.getElementById(cbId), txt = document.getElementById(txtId);
+    cb.addEventListener('change', () => { txt.disabled = !cb.checked; if(cb.checked) txt.focus(); });
+  });
+
+  function resetForm() {
+    if (!confirm('Créer un nouveau rapport ? Les données actuelles seront effacées.')) return;
+    document.querySelectorAll('input[type="text"],input[type="email"],input[type="tel"],textarea').forEach(el => el.value = '');
+    document.querySelectorAll('input[type="checkbox"],input[type="radio"]').forEach(el => el.checked = false);
+    document.querySelectorAll('input[type="date"]').forEach(el => el.value = '');
+    ['motif_txt','type_txt','reco_txt'].forEach(id => document.getElementById(id).disabled = true);
+    document.getElementById('examDate').value = today;
+  }
+</script>
+</body>
+</html>
